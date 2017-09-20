@@ -9,6 +9,19 @@
  *
  */
 
+/*
+[Matrix Multiply Using CUDA] - Starting...
+GPU Device 0: "GeForce GT 620M" with compute capability 2.1
+
+MatrixA(320,320), MatrixB(640,320)
+Computing result using CUDA Kernel...
+done
+Performance= 2.25 GFlop/s, Time= 58.142 msec, Size= 131072000 Ops, WorkgroupSize= 1024 threads/block
+Checking computed result for correctness: Result = PASS
+
+NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.
+*/
+
 /**
  * Matrix multiplication: C = A * B.
  * Host code.
@@ -214,7 +227,9 @@ int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dim
   }
   else
   {
+
     matrixMulCUDA<32><<< grid, threads >>>(d_C, d_A, d_B, dimsA.x, dimsB.x);
+
   }
 
   printf("done\n");
@@ -360,6 +375,10 @@ int matrixMultiply(int argc, char **argv, int block_size, dim3 &dimsA, dim3 &dim
  */
 int main(int argc, char **argv)
 {
+  SYSTEMTIME st;
+  GetLocalTime(&st);
+  printf("\n%04d-%02d-%02d %02d:%02d:%02d:%03d\n", st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
+
   printf("[Matrix Multiply Using CUDA] - Starting...\n");
 
   if (checkCmdLineFlag(argc, (const char **)argv, "help") ||
@@ -411,8 +430,8 @@ int main(int argc, char **argv)
   // Use a larger block size for Fermi and above
   int block_size = (deviceProp.major < 2) ? 16 : 32;
 
-  dim3 dimsA(5*2*block_size, 5*2*block_size, 1);
-  dim3 dimsB(5*4*block_size, 5*2*block_size, 1);
+  dim3 dimsA(512, 512, 1);  //(5*2*block_size, 5*2*block_size, 1);
+  dim3 dimsB(512, 512, 1);  //(5*4*block_size, 5*2*block_size, 1);
 
   // width of Matrix A
   if (checkCmdLineFlag(argc, (const char **)argv, "wA"))
@@ -449,6 +468,8 @@ int main(int argc, char **argv)
 
   int matrix_result = matrixMultiply(argc, argv, block_size, dimsA, dimsB);
 
+  GetLocalTime(&st);
+  printf("\n%04d-%02d-%02d %02d:%02d:%02d:%03d\n", st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
 
   printf("\nPress any key to exit.\n");
   getchar();
