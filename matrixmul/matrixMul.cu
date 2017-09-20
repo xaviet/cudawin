@@ -19,7 +19,14 @@ done
 Performance= 2.25 GFlop/s, Time= 58.142 msec, Size= 131072000 Ops, WorkgroupSize= 1024 threads/block
 Checking computed result for correctness: Result = PASS
 
-NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.
+GPU Device 0: "GeForce GT 1030" with compute capability 6.1
+
+MatrixA(320,320), MatrixB(640,320)
+Computing result using CUDA Kernel...
+done
+Performance= 4.50 GFlop/s, Time= 29.144 msec, Size= 131072000 Ops, WorkgroupSize= 1024 threads/block
+Checking computed result for correctness: Result = PASS
+
 */
 
 /**
