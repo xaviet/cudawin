@@ -1,3 +1,14 @@
+/*
+CUDA initialized.
+Device : " GeForce GT 1030 "
+
+[512, 512] * [512, 512]
+cpu time = 0.944000s 944
+gpu time = 0.231000s 231
+
+
+*/
+
 #include "stdio.h"
 #include "assert.h"
 #include "windows.h"
@@ -39,9 +50,9 @@ bool InitCUDA(void)
 }
 #endif
 
-#define aW 855
-#define aH 511
-#define bW 1013
+#define aW 512
+#define aH 512
+#define bW 512
 #define blocknum 32//32
 #define threadnum 256//256
 
@@ -113,6 +124,7 @@ int main(int argc, char* argv[])
   }
   //∂®“Âæÿ’Û
   //int matrixa[N][N] , matrixb[N][N] , matrixc[N][N] , gpuresult[N][N] , matrixd[N][N] ;
+  printf("[%d, %d] * [%d, %d]\n", aW, aH, bW, aW);
   Matrix matrixa = InitMatrix(aW, aH);
   Matrix matrixb = InitMatrix(bW, aW);
   Matrix matrixc;
